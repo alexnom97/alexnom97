@@ -1,0 +1,23 @@
+library ieee;
+use ieee.std_logic_1164.all;
+ENTITY MUX 2_5 IS port (
+ u, v, w, x, y :in BIT;
+ s : in std_logic_vector(2 downto 0);
+ m : out BIT;
+END MUX 2_5;
+
+ARCHITECTURE BEHAVIORAL of MUX2_5 is
+begin
+ process(s)
+   begin
+     case s is
+       when "000" => m <= u;
+       when "001" => m <= v;
+       when "010" => m <= w;
+       when "011" => m <= x;
+       when "100" => m <= y;
+       when others => m <= y;
+     end case;
+  end process;
+end behavioral;
+

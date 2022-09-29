@@ -1,0 +1,22 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity shifter is port (
+ sin : in std_logic_vector(31 downto 0);
+ sout : out std_logic_vector(31 downto 0);
+ ops :in std_ulogic;
+ num : in std_logic_vector(4 downto 0));
+end shifter;
+
+architecture behavioral of shifter is
+  signal tmp: unsigned(31 downto 0);
+  
+begin
+  tmp <= to_unsigned(to_integer(signed(sin)),tmp'length) sll
+         to_integer(signed(num)) when ops='0' else
+         to_unsigned(to_integer(signed(sin)),tmp'length) srl
+         to_integer(signed(num)) when ops='1';
+  sout <= std_logic_vector(to_signed(to_integer(tmp),sout'length));
+end behavioral;
+

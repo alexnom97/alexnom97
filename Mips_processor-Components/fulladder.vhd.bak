@@ -1,0 +1,34 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+entity fulladder is
+generic(
+  N             : integer := 8);
+port (
+  i_clk       : in     std_logic;
+  i_add1      : in     std_logic_vector(31 downto 0);
+  i_add2      : in     std_logic_vector(31 downto 0);
+  o_sum       : out    std_logic_vector(32 downto 0));
+end fulladder;
+
+architecture behavioral of adder_full_signed_reg is
+signal r_add1   : signed(32 downto 0);
+signal r_add2   : signed(32 downto 0);
+signal w_sum    : signed(32 downto 0);
+begin
+-- combinatorial adder
+  w_sum <= r_add1 + r_add2;
+r_process : process(i_clk)
+begin
+  if(rising_edge(i_clk)) then
+  
+  -- register input and extend sign
+    r_add1      <=  resize(signed(i_add1),33);
+    r_add2      <=  resize(signed(i_add2),33);
+    
+  -- register output
+    o_sum       <= std_logic_vector(w_sum);
+    
+  end if;
+end process r_process;
+end behavioral;
